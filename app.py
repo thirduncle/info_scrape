@@ -4,7 +4,7 @@ import database
 
 # TODO: Add show description as column in DB.
 #       Get direct link to radio show.
-#       Create CLI menu
+#       Create logic for CLI menu
 
 base_url = 'https://info-war.gr/infowar-radio/'
 bs = BeautifulSoup(requests.get(base_url).text, 'html.parser')
