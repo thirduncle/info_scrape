@@ -1,8 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
+import database
 
-# TODO: Add description as a column in DB.
-#       Get direct link to radio show (instead of show's page).
+# TODO: Add show description as column in DB.
+#       Get direct link to radio show.
+#       Create CLI menu
 
 base_url = 'https://info-war.gr/infowar-radio/'
 bs = BeautifulSoup(requests.get(base_url).text, 'html.parser')
@@ -39,20 +41,26 @@ def get_show_info(url):
         shows_list.append(shows_dict)
     return shows_list
 
-#print(get_all_pages(base_url))
 
-create_table()
+database.create_table()
 
+for item in shows_list:
+    database.add_entry(item['date'], item['title'], item['link'])
+
+
+"""
 for page in get_all_pages(base_url):
     get_show_info(page)
 
-#for item in shows_list:
-    #print(item)
-
 for item in shows_list:
-    add_entry(item['date'], item['title'], item['link'])
+    print(item)
 
-#print(get_show_info(base_url))
+print(get_show_info(base_url))
+
+for page in get_all_pages(base_url):
+    get_show_info(page)
+"""
+
 
 
 menu = """
@@ -65,18 +73,10 @@ Choose your option:
 
 Your selection: """
 
-welcome = "Welcome to InfoWar podcasts collection"
+welcome = " ---- Welcome to InfoWar podcasts collection ---- "
 
 print()
 print(welcome)
-
-
-#for page in get_all_pages(base_url):
- #   get_show_info(page)
-
-
-
-"""
 
 
 while (user_input := input(menu)) != "4":
@@ -88,8 +88,3 @@ while (user_input := input(menu)) != "4":
         pass
     else:
         print("Invalid option, please try again!")
-
-
-
-
-"""
